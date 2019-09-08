@@ -46,33 +46,41 @@ with picamera.PiCamera() as camera:
    crosshairPad.paste(crosshairImg, (0, 0))
 
    # Attach overlays 
-   topOverlay = camera.add_overlay(topOverlayImage.tostring(), format='rgb', size=(704,60), layer=3, alpha=128, fullscreen=False, window=(0,20,704,60))
-   bottomOverlay = camera.add_overlay(bottomOverlayImage.tostring(), format='rgb', size=(704,60), layer=4, alpha=128, fullscreen=False, window=(0,500,704,60))
-   crosshairOverlay = camera.add_overlay(crosshairPad.tostring(), format='rgb', size=(704,512), layer=5, alpha=10, fullscreen=False, window=(20,30,704,512))
+   #topOverlay = camera.add_overlay(topOverlayImage.tostring(), format='rgb', size=(704,60), layer=3, alpha=128, fullscreen=False, window=(0,20,704,60))
+   #bottomOverlay = camera.add_overlay(bottomOverlayImage.tostring(), format='rgb', size=(704,60), layer=4, alpha=128, fullscreen=False, window=(0,500,704,60))
+   #crosshairOverlay = camera.add_overlay(crosshairPad.tostring(), format='rgb', size=(704,512), layer=5, alpha=10, fullscreen=False, window=(20,30,704,512))
 
    try:
       while True:
-         topOverlayImage = textOverlayCanvas.copy()
-         bottomOverlayImage = textOverlayCanvas.copy()
+        topOverlay = camera.add_overlay(topOverlayImage.tostring(), format='rgb', size=(704,60), layer=3, alpha=128, fullscreen=False, window=(0,20,704,60))
+        bottomOverlay = camera.add_overlay(bottomOverlayImage.tostring(), format='rgb', size=(704,60), layer=4, alpha=128, fullscreen=False, window=(0,500,704,60))
+        crosshairOverlay = camera.add_overlay(crosshairPad.tostring(), format='rgb', size=(704,512), layer=5, alpha=10, fullscreen=False, window=(20,30,704,512))
 
-         drawTopOverlay = ImageDraw.Draw(topOverlayImage)
-         drawTopOverlay.text((200, 15), topText, font=font, fill=(255, 0, 255))
+        topOverlayImage = textOverlayCanvas.copy()
+        bottomOverlayImage = textOverlayCanvas.copy()
 
-         topOverlay.update(topOverlayImage.tostring())
+        drawTopOverlay = ImageDraw.Draw(topOverlayImage)
+        drawTopOverlay.text((200, 15), topText, font=font, fill=(255, 0, 255))
 
-         drawBottomOverlay = ImageDraw.Draw(bottomOverlayImage)
-         drawBottomOverlay.text((150, 20), bottomText+str(datetime.datetime.now()), font=font, fill=(255, 0, 0))
+        topOverlay.update(topOverlayImage.tostring())
 
-         bottomOverlay.update(bottomOverlayImage.tostring())
+        drawBottomOverlay = ImageDraw.Draw(bottomOverlayImage)
+        drawBottomOverlay.text((150, 20), bottomText+str(datetime.datetime.now()), font=font, fill=(255, 0, 0))
+
+        bottomOverlay.update(bottomOverlayImage.tostring())
          
          #extra = camera.add_overlay(topOverlayImage.tostring(), format = 'rgb', size=(704,60), layer=3, alpha=128, fullscreen=False, window=(0,20,704,60))
          #camera.remove_overlay(extra)
-         time.sleep(1)
+
+        time.sleep(1)
+        camera.remove_overlay(topOverlay)
+        camera.remove_overlay(bottomOverlay)
+        camera.remove_overlay(crosshairOverlay)
 
    except KeyboardInterrupt:
-      camera.remove_overlay(topOverlay)
-      camera.remove_overlay(bottomOverlay)
-      camera.remove_overlay(crosshairOverlay)
+      #camera.remove_overlay(topOverlay)
+      #camera.remove_overlay(bottomOverlay)
+      #camera.remove_overlay(crosshairOverlay)
 
       print "Cancelled"
 

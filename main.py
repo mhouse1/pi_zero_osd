@@ -11,7 +11,8 @@ import datetime
 from PIL import Image, ImageDraw, ImageFont
 
 # Video Resolution for recording
-VIDEO_HEIGHT = 940
+#set to 940 will show raspberry pi logo/status with video not taking up full screen
+VIDEO_HEIGHT = 720
 VIDEO_WIDTH = 1280
 
 baseDir='/home/pi/osd/' # directory where the video will be recorded

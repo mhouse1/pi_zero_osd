@@ -6,6 +6,7 @@ import numpy as np
 import string
 import random
 import os
+import datetime
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -22,7 +23,7 @@ textOverlayCanvas = Image.new("RGB", (704, 60))
 textOverlayPixels = textOverlayCanvas.load()
 
 # Use Roboto font (must be downloaded first)
-font = ImageFont.truetype("/usr/share/fonts/truetype/roboto/Roboto-Regular.ttf", 20) 
+font = ImageFont.truetype("/home/pi_zero_osd/Roboto-Regular.ttf", 40) 
 
 with picamera.PiCamera() as camera:
    camera.resolution = (VIDEO_WIDTH, VIDEO_HEIGHT)
@@ -31,7 +32,7 @@ with picamera.PiCamera() as camera:
    camera.start_preview()
 
    topText = "Alt: 310m       Spd: 45km/h         Dir: N"
-   bottomText = "47.6062 N, 122.3321 W   Home: 322m    Rec: 3:22"
+   bottomText = "        TerrafirmaTechnology.com         "
 
    topOverlayImage = textOverlayCanvas.copy()
    bottomOverlayImage = textOverlayCanvas.copy()
@@ -44,9 +45,9 @@ with picamera.PiCamera() as camera:
    crosshairPad.paste(crosshairImg, (0, 0))
 
    # Attach overlays 
-   topOverlay = camera.add_overlay(topOverlayImage.tostring(), size=(704,60), layer=3, alpha=128, fullscreen=False, window=(0,20,704,60))
-   bottomOverlay = camera.add_overlay(bottomOverlayImage.tostring(), size=(704,60), layer=4, alpha=128, fullscreen=False, window=(0,500,704,60))
-   crosshairOverlay = camera.add_overlay(crosshairPad.tostring(), size=(704,512), layer=5, alpha=10, fullscreen=False, window=(20,30,704,512))
+   topOverlay = camera.add_overlay(topOverlayImage.tostring(), format='rgb', size=(704,60), layer=3, alpha=128, fullscreen=False, window=(0,20,704,60))
+   bottomOverlay = camera.add_overlay(bottomOverlayImage.tostring(), format='rgb', size=(704,60), layer=4, alpha=128, fullscreen=False, window=(0,500,704,60))
+   crosshairOverlay = camera.add_overlay(crosshairPad.tostring(), format='rgb', size=(704,512), layer=5, alpha=10, fullscreen=False, window=(20,30,704,512))
 
    try:
       while True:
@@ -59,10 +60,12 @@ with picamera.PiCamera() as camera:
          topOverlay.update(topOverlayImage.tostring())
 
          drawBottomOverlay = ImageDraw.Draw(bottomOverlayImage)
-         drawBottomOverlay.text((150, 20), bottomText, font=font, fill=(255, 255, 255))
+         drawBottomOverlay.text((150, 20), bottomText+str(datetime.datetime.now()), font=font, fill=(255, 0, 0))
 
          bottomOverlay.update(bottomOverlayImage.tostring())
-
+         
+         #extra = camera.add_overlay(topOverlayImage.tostring(), format = 'rgb', size=(704,60), layer=3, alpha=128, fullscreen=False, window=(0,20,704,60))
+         #camera.remove_overlay(extra)
          time.sleep(1)
 
    except KeyboardInterrupt:

@@ -19,6 +19,7 @@ requirements:
     * #rc.local is run by root rather than the pi user, so we need to switch to the pi user before running the python script
     * cd /home/pi_zero_osd #change directory to the script location, required if your code does not use relative paths
     * sudo -H -u pi python /home/pi_zero_osd/main.py &
+* to terminal the python script thats loaded by rc.local, you can ssh to it and run command "killall python"
 
 
 # troubleshooting

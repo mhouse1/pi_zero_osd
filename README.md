@@ -12,6 +12,14 @@ requirements:
  
 # development
 * configure your pi with your wifi name and password, then you can ssh to it using "ssh pi@raspberrypi.local" password "raspberry" by default
+* running script on bootup
+ * use command "pi@raspberrypi:~ $ sudo nano /etc/rc.local
+" to edit the rc.local and add the following to the end of rc.local before the exit 0
+
+    * #rc.local is run by root rather than the pi user, so we need to switch to the pi user before running the python script
+    * cd /home/pi_zero_osd #change directory to the script location, required if your code does not use relative paths
+    * sudo -H -u pi python /home/pi_zero_osd/main.py &
+
 
 # troubleshooting
 * 'unable to determine format from source size') picamera.exc.PiCameraValueError: unable to determine format from source size

@@ -5,6 +5,14 @@ requirements:
 * install pillow - had to also specify no cache due to memory issues
   * pip install Pillow --no-cache-dir , to install new pillow without cache
     * had to install older pillow: pip install Pillow==2.1.0 to resolve error "tostring() has been removed. Please call tobytes() instead."
+* python3 setup
+  * sudo apt-get install python3-pip
+  * sudo apt-get install libopenjp2-7
+  * sudo apt install libtiff5
+  * sudo apt-get install python3-picamera
+
+
+
 
 # usage
 * to retrieve or send files off to pi zero

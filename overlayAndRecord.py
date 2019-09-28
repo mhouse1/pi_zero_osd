@@ -35,7 +35,7 @@ with picamera.PiCamera() as camera:
          text = time.strftime('%H:%M:%S', time.gmtime())
          img = crossHair.copy()
          draw = ImageDraw.Draw(img)
-         draw.font = ImageFont.truetype("/usr/share/fonts/truetype/freefont/FreeSerif.ttf", 20)
+         draw.font = ImageFont.truetype("/home/pi_zero_osd/Roboto-Regular.ttf", 20)#("/usr/share/fonts/truetype/freefont/FreeSerif.ttf", 20)
          draw.text((10, 10), text, (255, 255, 255))
          draw.text((10, 100), text, (0, 255, 255))
          draw.text((10, 200), text, (255, 0, 255))
